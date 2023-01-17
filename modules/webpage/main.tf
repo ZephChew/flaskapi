@@ -30,7 +30,7 @@ resource "docker_container" "flask" {
     internal = 80
     external = 81
   }
-  #mount volumne for downloaded packagesm
+  #mount volumne for downloaded packages
   volumes {
     container_path = "/downloads"
     host_path      = "/mnt/c/Users/Chew Shi Tian/Downloads/00. Work/gcc/localnexus/modules/webpage/packages/"
