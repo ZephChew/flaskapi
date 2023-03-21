@@ -2,6 +2,7 @@
 Terraform version v1.3.6\
 provider - v2.22.0
 
+# Docker related
 
 
 # Install pip for non-sudo user

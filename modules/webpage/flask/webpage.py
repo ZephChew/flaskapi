@@ -71,7 +71,7 @@ def requestDownload():
 
    ### Call OS to download package
    ### *** (TO DO) add catch if package download fails
-   process = subprocess.check_call([sys.executable, "-m", "pip", "download", package, "-d", "/downloads"])
+   process = subprocess.check_call([sys.executable, "-m", "pip", "download", package, "-d", "/downloads", "--python-version", "3.9", "--only-binary=:all:"])
    #while process.returncode == None:
    json_data = {
       "package-name": package,

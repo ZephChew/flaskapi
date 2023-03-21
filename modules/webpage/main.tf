@@ -9,7 +9,9 @@ terraform {
 
 # Specifying the Docker provider configuration
 provider "docker" {
-  host = "unix:///var/run/docker.sock"
+  #host = "unix:///var/run/docker.sock"
+  host = "tcp://localhost:2375" #for WSL version 1
+  #host = "npipe:////.//pipe//docker_engine"
 }
 
 #webpage flask
@@ -32,14 +34,16 @@ resource "docker_container" "flask" {
   }
   #mount volumne for downloaded packages
   volumes {
+    #host_path changed due to using window's docker desktop 
+    #/mnt/c is for linux WSL2 or linux docker
     container_path = "/downloads"
-    host_path      = "/mnt/c/Users/Chew Shi Tian/Downloads/00. Work/gcc/localnexus/modules/webpage/packages/"
+    host_path      = "/c/Users/Chew Shi Tian/Downloads/00. Work/gcc/localnexus/modules/webpage/packages/"
     read_only      = false
   }
   #mount gunicorn and python file to load webpage
   volumes {
     container_path = "/opt/app"
-    host_path      = "/mnt/c/Users/Chew Shi Tian/Downloads/00. Work/gcc/localnexus/modules/webpage/flask"
+    host_path      = "/c/Users/Chew Shi Tian/Downloads/00. Work/gcc/localnexus/modules/webpage/flask/"
     read_only      = true
   }
   #start gunicorn
@@ -66,8 +70,10 @@ resource "docker_container" "postgres" {
   #command = ["/bin/bash", "-c", "tail -f /dev/null"]
 
   volumes {
-    host_path      = "/mnt/c/Users/Chew Shi Tian/Downloads/00. Work/gcc/localnexus/modules/webpage/postgres/"
-    container_path = "/var/lib/postgresql/"
+    #host_path changed due to using window's docker desktop 
+    #/mnt/c is for linux WSL2 or linux docker
+    host_path      = "/c/Users/Chew Shi Tian/Downloads/00. Work/gcc/localnexus/modules/webpage/postgres/data"
+    container_path = "/var/lib/postgresql/data"
     read_only      = false
   }
 
@@ -77,10 +83,10 @@ resource "docker_container" "postgres" {
   }
 }
 
-resource "docker_volume" "flask_python" {
-  name = "flask_python"
-}
+# resource "docker_volume" "flask_python" {
+#   name = "flask_python"
+# }
 
-resource "docker_volume" "flask_downloads" {
-  name = "flask_downloads"
-}
+# resource "docker_volume" "flask_downloads" {
+#   name = "flask_downloads"
+# }

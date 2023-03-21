@@ -3,6 +3,3 @@ variable "environment" {
   description = "prod or uat or dev"
 }
 
-# variable "name" {
-#   type = string
-# }

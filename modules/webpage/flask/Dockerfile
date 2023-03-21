@@ -18,6 +18,7 @@ RUN pip install -r requirements.txt
 RUN mkdir -p /opt/app
 #folder for pip
 RUN mkdir -p /opt/.local
+RUN mkdir -p /opt/.cache/pip
 
 #create the app user
 RUN addgroup --system app && adduser --system --group app
@@ -33,14 +34,17 @@ WORKDIR $APP_HOME
 #chown all files to the app user
 RUN chown -R app:app $APP_HOME
 RUN chown -R app:app $PIP_HOME
+RUN chown -R app:app /opt/.cache
 
 #change to app user
 USER app
-#install pip for app user
+#copy required files to docker image
 COPY get-pip.py ./
+#install pip as user 
 RUN python3 get-pip.py --user
 #set python PATH
 ENV PYTHONPATH /opt/.local/bin
+
 
 #CMD gunicorn --bind 0.0.0:80 wsgi:app 
 
