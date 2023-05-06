@@ -1,5 +1,5 @@
 # Requirements
-Terraform version v1.3.6\
+Terraform version v1.3.6
 provider - v2.22.0
 
 # Docker related
@@ -13,25 +13,6 @@ wget --no-check-certificate https://bootstrap.pypa.io/get-pip.py && python3 get-
 #set python PATH
 ENV PYTHONPATH /opt/.local/bin
 ```
-
-# Call Lambda function using AWS CLI
-
-1. Save following JSON to input.txt
-
-```json
-{
-    "operation": "echo",
-    "payload": {
-        "somekey1": "somevalue1",
-        "somekey2": "somevalue2"
-    }
-}
-```
-
-2. Run command
-
-aws lambda invoke --function-name LambdaFunctionOverHttps \
---payload file://input.txt outputfile.txt 
 
 ## Note
 
